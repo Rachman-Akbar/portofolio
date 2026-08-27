@@ -33,6 +33,8 @@
   gap:clamp(32px,7vw,96px);
 }
 .hero-content{
+  position:relative;
+  z-index:5;
   width:100%;
   min-width:0;
   max-width:680px;
@@ -506,6 +508,7 @@ body.theme-dark .lanyard-drag-handle:focus-visible .lanyard-drag-grip::after{
   width:var(--lanyard-canvas-width,620px);
   height:var(--lanyard-canvas-height,560px);
   transform:translateX(-50%);
+  opacity:0.35;
 }
 .lanyard-anchor-dot{
   top:var(--lanyard-anchor-top,-180px);
