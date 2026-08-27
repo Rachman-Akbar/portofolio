@@ -151,8 +151,8 @@ export default function Contact() {
   return (
     <section ref={sectionRef} className="section contact" id="kontak">
       <div className="section-head reveal">
-        <p className="section-kicker">Kolaborasi</p>
-        <h2 className="section-title">Mari Membuat Sesuatu yang Berguna</h2>
+        <p className="section-kicker">COLLABORATION</p>
+        <h2 className="section-title">Mari Berkolaborasi dengan Saya</h2>
       </div>
       <div className="mail-stage reveal" id="mailStage">
         <div className={`mailbox-container${celebrate ? ' celebrate' : ''}`} id="openFormBtn">

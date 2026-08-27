@@ -308,9 +308,8 @@ export default function Journey() {
   return (
     <section ref={sectionRef} className="section journey" id="perjalanan">
       <div className="section-head reveal">
-        <p className="section-kicker">Perjalanan</p>
+        <p className="section-kicker">MY JOURNEY</p>
         <h2 className="section-title">Pendidikan, Prestasi, dan Pengalaman</h2>
-        <p className="section-sub">Bola terus melompat sementara tangga bergerak tanpa putus. Setiap pijakan membuka satu cerita baru di panel sebelahnya.</p>
       </div>
       <div className="journey-grid reveal">
         <div

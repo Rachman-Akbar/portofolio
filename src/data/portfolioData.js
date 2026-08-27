@@ -52,7 +52,7 @@ export const PROJECT_REDIRECT_URL = 'https://docs.google.com/spreadsheets/d/14LB
 export const portfolioData = {
   site: {
     heroImage: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=84',
-    idCardImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=88',
+    idCardImage: 'images/idcard/idcard.png',
   },
   contact: {
     email: 'akbarfahlevy39@gmail.com',
@@ -146,7 +146,7 @@ export const portfolioData = {
       gridWidth: 180,
       gridSpan: 1,
       rowSpan: 1,
-      localImage: '/images/rajaAmpat.png',
+      localImage: '/images/project/rajaAmpat.png',
       image: 'https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=1200&q=82',
       desc: 'Website edukasi mengenai wilayah, budaya, dan nilai kebangsaan Kabupaten Raja Ampat.',
       body: [
@@ -248,7 +248,7 @@ export const portfolioData = {
     {
       id: 1,
       role: 'Software Engineer',
-      company: 'Nama Perusahaan',
+      company: 'PT. Kisha Indonesia Buffer',
       title: 'Membangun dan mengembangkan sistem aplikasi',
       summary: 'Tuliskan ringkasan pengalaman kerja, tanggung jawab utama, pencapaian, dan dampak pekerjaan di sini. Lorem wkwkwkw kw wkwkwkwkkwkww ',
       color: '#7d6cf2',
@@ -271,22 +271,6 @@ export const portfolioData = {
       soft: '#e4efff',
       coverImage: GITHUB_PROJECT_IMAGE,
       coverAlt: 'Full Stack Developer',
-      supportMode: 'auto',
-      sponsors: [
-        { image: KISHA_IMAGE, url: KISHA_URL },
-      ],
-      url: WORK_CARD_URL,
-    },
-    {
-      id: 3,
-      role: 'Web Developer',
-      company: 'Project Portfolio',
-      title: 'Mengembangkan pengalaman web yang responsif dan interaktif',
-      summary: 'Tambahkan pengalaman kerja lain sebagai objek baru. Setiap card otomatis mengikuti timeline, warna aksen, gambar kiri, sponsor, dan URL tujuan.',
-      color: '#36bda1',
-      soft: '#e4faf5',
-      coverImage: GITHUB_PROJECT_IMAGE,
-      coverAlt: 'Web Developer',
       supportMode: 'auto',
       sponsors: [
         { image: KISHA_IMAGE, url: KISHA_URL },

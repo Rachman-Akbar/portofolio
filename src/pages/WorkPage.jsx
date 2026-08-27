@@ -57,8 +57,6 @@ export default function WorkPage() {
           <div className="work-hero-inner">
             <p className="section-kicker">Work Journal</p>
             <h1>Pengalaman Kerja</h1>
-            <p>Kumpulan pengalaman, tanggung jawab, proses pengembangan, dan pembelajaran yang dapat kamu kelola langsung melalui portfolioData.js.</p>
-            <Link to="/#perjalanan" className="work-back">← Kembali ke portofolio</Link>
           </div>
         </section>
 

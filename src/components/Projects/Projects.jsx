@@ -214,8 +214,8 @@ export default function Projects() {
   return (
     <section ref={sectionRef} className="section projects" id="proyek">
       <div className="section-head reveal projects-head">
-        <p className="section-kicker">Selected Work</p>
-        <h2 className="section-title">Proyek Pilihan</h2>
+        <p className="section-kicker">MY PROJECTS</p>
+        <h2 className="section-title">Proyek Saya</h2>
       </div>
       <div
         ref={marqueeRef}
