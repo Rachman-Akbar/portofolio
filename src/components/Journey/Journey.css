@@ -98,6 +98,7 @@
   max-width:92%;
   font-size:clamp(.74rem,1.4vw,.91rem);
   color:rgba(34,32,30,.72);
+  text-align:justify;
 }
 .story-accent{
   position:absolute;
@@ -254,6 +255,7 @@
 }
 .story-card p{
   max-width:100%;
+  text-align:justify;
 }
 .story-number{
   z-index:3;

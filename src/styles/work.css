@@ -92,7 +92,7 @@
   text-wrap:balance;
 }
 .work-role{margin-top:10px;color:var(--work-color);font-size:.84rem;font-weight:650}
-.work-summary{width:min(100%,900px);margin-top:20px;color:var(--ink-soft);font-size:clamp(.9rem,1.3vw,.98rem);line-height:1.72}
+.work-summary{width:min(100%,900px);margin-top:20px;color:var(--ink-soft);font-size:clamp(.9rem,1.3vw,.98rem);line-height:1.72;text-align:justify}
 .work-sponsors{align-self:flex-end;display:flex;align-items:center;justify-content:flex-end;min-width:0}
 .work-sponsor-button{
   display:inline-flex;

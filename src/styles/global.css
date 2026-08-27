@@ -27,15 +27,27 @@ html{
   min-width:0;
   scroll-behavior:smooth;
   overflow-x:clip;
+  overflow-y:overlay;
+  scrollbar-width:none;
+}
+html::-webkit-scrollbar{
+  width:0;
+  display:none;
 }
 body{
   width:100%;
   min-width:0;
+  overflow-y:overlay;
+  scrollbar-width:none;
   font-family:var(--font-body);
   color:var(--ink);
   background:var(--bg);
   line-height:1.6;
   overflow-x:clip;
+}
+body::-webkit-scrollbar{
+  width:0;
+  display:none;
 }
 a{
   color:inherit;

@@ -1,53 +1,12 @@
 export const HTML = 'HTML'
 export const CSS = 'CSS'
 export const JAVASCRIPT = 'JavaScript'
-export const TYPESCRIPT = 'TypeScript'
 export const REACT = 'React'
-export const VUE = 'Vue'
-export const ANGULAR = 'Angular'
 export const LARAVEL = 'Laravel'
-export const PHP = 'PHP'
-export const NODE_JS = 'Node.js'
-export const NEXT_JS = 'Next.js'
 export const MYSQL = 'MySQL'
-export const POSTGRESQL = 'PostgreSQL'
 export const FLUTTER = 'Flutter'
 export const DART = 'Dart'
-export const PYTHON = 'Python'
-export const JAVA = 'Java'
-export const THREE_JS = 'Three.js'
-export const GSAP = 'GSAP'
-export const TAILWIND_CSS = 'Tailwind CSS'
-
-const googleTechnologyIcon = url => `https://www.google.com/s2/favicons?sz=128&domain_url=${encodeURIComponent(url)}`
-
-export const HTML_IMAGE = googleTechnologyIcon('https://developer.mozilla.org/en-US/docs/Web/HTML')
-export const CSS_IMAGE = googleTechnologyIcon('https://developer.mozilla.org/en-US/docs/Web/CSS')
-export const JAVASCRIPT_IMAGE = googleTechnologyIcon('https://developer.mozilla.org/en-US/docs/Web/JavaScript')
-export const TYPESCRIPT_IMAGE = googleTechnologyIcon('https://www.typescriptlang.org')
-export const REACT_IMAGE = googleTechnologyIcon('https://react.dev')
-export const VUE_IMAGE = googleTechnologyIcon('https://vuejs.org')
-export const ANGULAR_IMAGE = googleTechnologyIcon('https://angular.dev')
-export const LARAVEL_IMAGE = googleTechnologyIcon('https://laravel.com')
-export const PHP_IMAGE = googleTechnologyIcon('https://www.php.net')
-export const NODE_JS_IMAGE = googleTechnologyIcon('https://nodejs.org')
-export const NEXT_JS_IMAGE = googleTechnologyIcon('https://nextjs.org')
-export const MYSQL_IMAGE = googleTechnologyIcon('https://www.mysql.com')
-export const POSTGRESQL_IMAGE = googleTechnologyIcon('https://www.postgresql.org')
-export const FLUTTER_IMAGE = googleTechnologyIcon('https://flutter.dev')
-export const DART_IMAGE = googleTechnologyIcon('https://dart.dev')
-export const PYTHON_IMAGE = googleTechnologyIcon('https://www.python.org')
-export const JAVA_IMAGE = googleTechnologyIcon('https://www.java.com')
-export const THREE_JS_IMAGE = googleTechnologyIcon('https://threejs.org')
-export const GSAP_IMAGE = googleTechnologyIcon('https://gsap.com')
-export const TAILWIND_CSS_IMAGE = googleTechnologyIcon('https://tailwindcss.com')
-export const KISHA_IMAGE = googleTechnologyIcon('https://kisha.co.id/')
-export const GITHUB_PROJECT_IMAGE = googleTechnologyIcon('https://github.com/Rachman-Akbar/ProjectAn')
-
-export const WORK_CARD_URL = 'https://github.com/Rachman-Akbar/ProjectAn'
-export const KISHA_URL = 'https://kisha.co.id/'
-
-export const PROJECT_REDIRECT_URL = 'https://docs.google.com/spreadsheets/d/14LB97M4e7dHV7nhr0pxxXNIZW8KekoJQVAusyEDev_U/edit?gid=0#gid=0'
+export const ANDROID = 'Android'
 
 export const portfolioData = {
   site: {
@@ -112,7 +71,8 @@ export const portfolioData = {
       soft: '#e4faf5',
       glow: '#c9f3e9',
       title: 'Pendidikan Tinggi',
-      desc: 'Mendalami rekayasa perangkat lunak, sistem informasi, analisis kebutuhan, dan pengembangan produk digital.',
+      desc: 'Bismillah bisa masuk PT',
+      // Mendalami rekayasa perangkat lunak, sistem informasi, analisis kebutuhan, dan pengembangan produk digital.',
       url: '',
       external: false,
       localImage: '',
@@ -153,7 +113,7 @@ export const portfolioData = {
         'Games edukasi bertema SDGs yang dikembangkan untuk platform Android sebagai media pembelajaran yang interaktif.',
         'Project ini menyajikan materi SDGs melalui permainan agar lebih mudah dipahami oleh pengguna.',
       ],
-      technologies: [FLUTTER, DART, 'Android'],
+      technologies: [FLUTTER, DART, ANDROID],
     },
     {
       slug: 'match-card',
@@ -197,7 +157,7 @@ export const portfolioData = {
         'Aplikasi monitoring kelas dibangun untuk platform Android dengan backend Laravel dan frontend React JS.',
         'Memudahkan pemantauan aktivitas kelas secara real-time.',
       ],
-      technologies: [REACT, LARAVEL, 'Android'],
+      technologies: [REACT, LARAVEL, ANDROID],
     },
     {
       slug: 'raja-ampat',
@@ -285,7 +245,7 @@ export const portfolioData = {
         'Games berbasis Android dirancang untuk memberikan reward kepada pengguna marketplace.',
         'Dapat diintegrasikan dengan aplikasi marketplace untuk meningkatkan keterlibatan pengguna.',
       ],
-      technologies: [FLUTTER, DART, 'Android'],
+      technologies: [FLUTTER, DART, ANDROID],
     },
   ],
   experiences: [

@@ -26,11 +26,20 @@
   color:var(--accent);
 }
 .nav-home{
-  width:38px;
+  width:auto;
   height:38px;
-  display:grid;
-  place-items:center;
+  display:flex;
+  align-items:center;
+  gap:8px;
   line-height:1;
+}
+.nav-name{
+  font-family:var(--font-display);
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  color:var(--ink);
 }
 .nav-star{
   width:26px;
@@ -64,6 +73,136 @@
   color:#fff!important;
   border-radius:999px;
 }
+
+.nav-hamburger{
+  display:none;
+  flex:0 0 auto;
+  width:40px;
+  height:40px;
+  padding:8px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  position:relative;
+  z-index:110;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+}
+.nav-hamburger span{
+  display:block;
+  width:22px;
+  height:2px;
+  background:var(--ink);
+  border-radius:2px;
+  transition:transform .3s ease,opacity .3s ease;
+}
+.nav-hamburger span+span{
+  margin-top:0;
+}
+.nav-hamburger.is-open span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+.nav-hamburger.is-open span:nth-child(2){
+  opacity:0;
+}
+.nav-hamburger.is-open span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
+
+.nav-sidebar-overlay{
+  position:fixed;
+  inset:0;
+  z-index:99;
+  background:rgba(0,0,0,.4);
+  backdrop-filter:blur(4px);
+  animation:navOverlayIn .3s ease;
+}
+
+.nav-sidebar{
+  position:fixed;
+  top:0;
+  right:0;
+  z-index:100;
+  width:min(300px,85vw);
+  height:100dvh;
+  background:var(--bg,#fff);
+  box-shadow:-4px 0 24px rgba(0,0,0,.12);
+  transform:translateX(0);
+  animation:navSidebarIn .32s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+}
+@keyframes navOverlayIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes navSidebarIn{
+  from{transform:translateX(100%)}
+  to{transform:translateX(0)}
+}
+
+.nav-sidebar-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 24px 16px;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.nav-sidebar-title{
+  font-family:var(--font-display);
+  font-size:.9rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.nav-sidebar-close{
+  width:36px;
+  height:36px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.05);
+  color:var(--ink);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:background .15s ease,transform .15s ease;
+}
+.nav-sidebar-close:hover{
+  background:rgba(0,0,0,.1);
+  transform:rotate(90deg);
+}
+
+.nav-sidebar-links{
+  display:flex;
+  flex-direction:column;
+  padding:12px 0;
+}
+.nav-sidebar-links a{
+  display:block;
+  padding:14px 24px;
+  font-size:.95rem;
+  font-weight:500;
+  color:var(--ink-soft);
+  text-decoration:none;
+  transition:background .15s ease,color .15s ease;
+}
+.nav-sidebar-links a:hover{
+  background:rgba(0,0,0,.04);
+  color:var(--ink);
+}
+.nav-sidebar-cta{
+  margin:8px 24px 16px;
+  padding:12px 20px!important;
+  background:linear-gradient(100deg,#6f61f5,#568eff 52%,#49c7a5);
+  color:#fff!important;
+  border-radius:12px;
+  font-weight:600!important;
+  text-align:center;
+}
+
 body.theme-dark .nav{
   border-bottom:1px solid transparent;
   background:
@@ -81,12 +220,46 @@ body.theme-dark .nav-links a:hover{
 body.theme-dark .nav-star{
   filter:drop-shadow(0 0 7px rgba(103,132,255,.48));
 }
+body.theme-dark .nav-name{
+  color:#f7f8ff;
+}
+body.theme-dark .nav-hamburger span{
+  background:#f7f8ff;
+}
+body.theme-dark .nav-sidebar{
+  background:#12162a;
+  box-shadow:-4px 0 24px rgba(0,0,0,.4);
+}
+body.theme-dark .nav-sidebar-header{
+  border-bottom-color:rgba(255,255,255,.08);
+}
+body.theme-dark .nav-sidebar-title{
+  color:#f7f8ff;
+}
+body.theme-dark .nav-sidebar-close{
+  background:rgba(255,255,255,.08);
+  color:#f7f8ff;
+}
+body.theme-dark .nav-sidebar-close:hover{
+  background:rgba(255,255,255,.14);
+}
+body.theme-dark .nav-sidebar-links a{
+  color:#b8bdd2;
+}
+body.theme-dark .nav-sidebar-links a:hover{
+  background:rgba(255,255,255,.06);
+  color:#fff;
+}
+body.theme-dark .nav-sidebar-overlay{
+  background:rgba(0,0,0,.6);
+}
+
 @media(max-width:720px){
   .nav,
   .nav-inner{min-height:58px}
-  .nav-links a:not(.nav-cta){display:none}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
 }
 @media(max-width:420px){
-  .nav-cta{padding:8px 12px;font-size:.78rem!important}
   .nav-star{width:24px;height:24px}
 }
