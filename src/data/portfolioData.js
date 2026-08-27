@@ -257,7 +257,9 @@ export const portfolioData = {
       coverAlt: 'Software Engineer',
       supportMode: 'auto',
       sponsors: [
-        { image: KISHA_IMAGE, url: KISHA_URL },
+        { image: KISHA_IMAGE, url: KISHA_URL, name: 'KISHA', type: 'inspired' },
+        { image: KISHA_IMAGE, url: KISHA_URL, name: 'KISHA', type: 'inspired' },
+        { image: KISHA_IMAGE, url: KISHA_URL, name: 'KISHA', type: 'support' },
       ],
       url: WORK_CARD_URL,
     },
@@ -273,7 +275,8 @@ export const portfolioData = {
       coverAlt: 'Full Stack Developer',
       supportMode: 'auto',
       sponsors: [
-        { image: KISHA_IMAGE, url: KISHA_URL },
+        { image: KISHA_IMAGE, url: KISHA_URL, name: 'KISHA', type: 'inspired' },
+        { image: KISHA_IMAGE, url: KISHA_URL, name: 'KISHA', type: 'support' },
       ],
       url: WORK_CARD_URL,
     },
