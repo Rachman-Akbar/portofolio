@@ -1,5 +1,5 @@
 import Konva from 'konva'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { portfolioData } from '../../data/portfolioData'
 import useRevealScope from '../../hooks/useRevealScope'
 import './Contact.css'
@@ -79,7 +79,7 @@ function useKonvaForm(containerRef) {
   return motionRef
 }
 
-export default function Contact() {
+export default memo(function Contact() {
   const sectionRef = useRef(null)
   const konvaRef = useRef(null)
   const timeoutRef = useRef(0)
@@ -187,4 +187,4 @@ export default function Contact() {
       </div>
     </section>
   )
-}
+})

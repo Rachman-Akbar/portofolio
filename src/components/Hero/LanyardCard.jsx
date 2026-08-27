@@ -198,6 +198,7 @@ function LanyardCard() {
       vy = 0
       card.setPointerCapture(pointerId)
       card.classList.add('is-dragging')
+      startRender()
       event.preventDefault()
     }
 
@@ -206,6 +207,7 @@ function LanyardCard() {
       targetX = clamp(originX + (event.clientX - startX) * 0.42, -72, 72)
       targetY = clamp(originY + event.clientY - startY, -10, 190)
       maxPull = Math.max(maxPull, Math.max(0, targetY))
+      startRender()
       event.preventDefault()
     }
 
@@ -227,6 +229,10 @@ function LanyardCard() {
     card.addEventListener('pointerup', release)
     card.addEventListener('pointercancel', release)
 
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+    let visible = true
+    let running = false
+
     const render = () => {
       const stiffness = dragging ? 0.28 : 0.095
       const damping = dragging ? 0.62 : 0.86
@@ -245,6 +251,18 @@ function LanyardCard() {
       updateCard()
       updateRope()
       renderer.render(scene, camera)
+
+      const isMoving = dragging || Math.abs(x) > 0.02 || Math.abs(y) > 0.02 || Math.abs(vx) > 0.02 || Math.abs(vy) > 0.02
+      if (isMoving && visible && !reducedMotion) {
+        frame = requestAnimationFrame(render)
+      } else {
+        running = false
+      }
+    }
+
+    const startRender = () => {
+      if (running || !visible || reducedMotion) return
+      running = true
       frame = requestAnimationFrame(render)
     }
 
@@ -260,12 +278,24 @@ function LanyardCard() {
     window.addEventListener('scroll', scheduleSync, { passive: true })
     window.visualViewport?.addEventListener('resize', scheduleSync, { passive: true })
 
+    const visibilityObserver = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting
+      if (visible) {
+        startRender()
+      } else {
+        running = false
+        cancelAnimationFrame(frame)
+      }
+    }, { rootMargin: '200px' })
+    visibilityObserver.observe(wrapper)
+
     syncCanvasGeometry()
     wrapper.classList.add('three-ready')
-    frame = requestAnimationFrame(render)
+    startRender()
 
     return () => {
       observer.disconnect()
+      visibilityObserver.disconnect()
       window.removeEventListener('resize', scheduleSync)
       window.removeEventListener('scroll', scheduleSync)
       window.visualViewport?.removeEventListener('resize', scheduleSync)

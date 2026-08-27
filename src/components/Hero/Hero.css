@@ -655,3 +655,11 @@ body.theme-dark .lanyard-pull-cue{
     animation:none;
   }
 }
+
+.id-card-wrapper .lanyard-canvas{
+  z-index:1;
+}
+.id-card-wrapper .lanyard-anchor-dot{
+  z-index:2;
+}
+

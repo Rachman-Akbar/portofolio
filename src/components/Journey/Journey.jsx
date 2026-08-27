@@ -62,7 +62,7 @@ const StoryCard = memo(function StoryCard({ stage, index, onActivate, clone = fa
   )
 })
 
-export default function Journey() {
+export default memo(function Journey() {
   const stages = portfolioData.stages
   const navigate = useNavigate()
   const sectionRef = useRef(null)
@@ -201,6 +201,9 @@ export default function Journey() {
       ctx.restore()
     }
 
+    let visible = true
+    let running = false
+
     const animate = time => {
       const elapsed = Math.max(0, time - startTimeRef.current)
       const completedSteps = Math.floor(elapsed / CYCLE_DURATION)
@@ -289,16 +292,35 @@ export default function Journey() {
       const ballColor = isJumping ? mixColor(stages[stageIndex].color, stages[nextStageIndex].color, jumpProgress) : stages[stageIndex].color
       const ballGap = clamp(ballRadius * 0.32, 6, 10)
       drawBall(landingX + barWidth / 2, landingY - ballGap, ballRadius, arcY, ballColor, jumpProgress)
-      frame = requestAnimationFrame(animate)
+      if (visible) {
+        frame = requestAnimationFrame(animate)
+      } else {
+        running = false
+      }
     }
 
     const observer = new ResizeObserver(resize)
     observer.observe(viewport)
+
+    const visibilityObserver = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting
+      if (visible && !running) {
+        running = true
+        frame = requestAnimationFrame(animate)
+      } else if (!visible) {
+        running = false
+        cancelAnimationFrame(frame)
+      }
+    }, { rootMargin: '250px' })
+    visibilityObserver.observe(viewport)
+
     resize()
+    running = true
     frame = requestAnimationFrame(animate)
 
     return () => {
       observer.disconnect()
+      visibilityObserver.disconnect()
       cancelAnimationFrame(frame)
     }
   }, [applyStage, stages])
@@ -358,4 +380,4 @@ export default function Journey() {
       </div>
     </section>
   )
-}
+})

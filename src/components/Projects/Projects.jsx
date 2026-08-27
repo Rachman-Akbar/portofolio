@@ -91,7 +91,7 @@ const ProjectCard = memo(function ProjectCard({ project, onClick, span }) {
   )
 })
 
-export default function Projects() {
+export default memo(function Projects() {
   const projects = portfolioData.projects
   const gridProjects = useMemo(() => projects.length % 2 === 0 ? projects : [...projects, projects[0]], [projects])
   const sectionRef = useRef(null)
@@ -238,4 +238,4 @@ export default function Projects() {
       </div>
     </section>
   )
-}
+})

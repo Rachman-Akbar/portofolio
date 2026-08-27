@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -30,7 +30,7 @@ function createFacetedStarGeometry(points = 5, outerRadius = 2.25, innerRadius =
   return geometry
 }
 
-export default function StarIntro() {
+export default memo(function StarIntro() {
   const sectionRef = useRef(null)
   const canvasRef = useRef(null)
   const cueRef = useRef(null)
@@ -129,6 +129,9 @@ export default function StarIntro() {
       camera.updateProjectionMatrix()
     }
 
+    let visible = true
+    let running = false
+
     const render = time => {
       camera.position.z = state.z
       camera.position.x = Math.sin(state.rotation * 0.7) * 0.9
@@ -150,7 +153,11 @@ export default function StarIntro() {
       star.scale.setScalar(state.starScale)
 
       renderer.render(scene, camera)
-      frame = requestAnimationFrame(render)
+      if (visible) {
+        frame = requestAnimationFrame(render)
+      } else {
+        running = false
+      }
     }
 
     const timeline = gsap.timeline({
@@ -169,11 +176,26 @@ export default function StarIntro() {
 
     const observer = new ResizeObserver(resize)
     observer.observe(canvas)
+
+    const visibilityObserver = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting
+      if (visible && !running) {
+        running = true
+        frame = requestAnimationFrame(render)
+      } else if (!visible) {
+        running = false
+        cancelAnimationFrame(frame)
+      }
+    }, { rootMargin: '250px' })
+    visibilityObserver.observe(section)
+
     resize()
+    running = true
     frame = requestAnimationFrame(render)
 
     return () => {
       observer.disconnect()
+      visibilityObserver.disconnect()
       cancelAnimationFrame(frame)
       timeline.scrollTrigger?.kill()
       timeline.kill()
@@ -200,4 +222,4 @@ export default function StarIntro() {
       </div>
     </section>
   )
-}
+})

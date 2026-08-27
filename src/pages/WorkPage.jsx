@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
 import { portfolioData } from '../data/portfolioData'
@@ -11,67 +11,6 @@ const timelinePalette = [
   { color: '#ff7f93', soft: '#ffe8ef' },
   { color: '#f1a64e', soft: '#fff3df' },
 ]
-
-function SponsorModal({ sponsors, onClose }) {
-  const hasInspired = sponsors.some(s => s.type === 'inspired')
-  const hasSupport = sponsors.some(s => s.type === 'support')
-  const [activeTab, setActiveTab] = useState(hasInspired ? 'inspired' : 'support')
-
-  const tabs = []
-  if (hasInspired) tabs.push({ key: 'inspired', label: 'Inspired By' })
-  if (hasSupport) tabs.push({ key: 'support', label: 'Support By' })
-
-  const filtered = sponsors.filter(s => s.type === activeTab)
-
-  return (
-    <div className="work-sponsor-overlay" onClick={onClose}>
-      <div
-        className="work-sponsor-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Sponsor details"
-        onClick={event => event.stopPropagation()}
-      >
-        <button type="button" className="work-sponsor-modal-close" onClick={onClose} aria-label="Tutup">
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <line x1="4" y1="4" x2="16" y2="16" />
-            <line x1="16" y1="4" x2="4" y2="16" />
-          </svg>
-        </button>
-
-        {tabs.length > 1 && (
-          <div className="work-sponsor-tabs">
-            {tabs.map(tab => (
-              <button
-                key={tab.key}
-                type="button"
-                className={`work-sponsor-tab${activeTab === tab.key ? ' is-active' : ''}`}
-                onClick={() => setActiveTab(tab.key)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="work-sponsor-modal-list">
-          {filtered.map((sponsor, i) => (
-            <a
-              key={`${activeTab}-${i}`}
-              href={sponsor.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-sponsor-modal-card"
-            >
-              <img src={sponsor.image} alt={sponsor.name || ''} loading="lazy" decoding="async" />
-              <span>{sponsor.name}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
 
 function MediaImage({ src, alt }) {
   if (!src) return <span className="work-media-placeholder" aria-hidden="true" />
@@ -88,8 +27,109 @@ function MediaImage({ src, alt }) {
   )
 }
 
+const MemoMediaImage = memo(MediaImage)
+
+const WorkItem = memo(function WorkItem({ item, palette, onOpen }) {
+  const allSponsors = useMemo(() => (item.sponsors || []).filter(s => s?.image && s?.url), [item])
+  const showIB = allSponsors.some(s => s.type === 'inspired')
+  const showSB = allSponsors.some(s => s.type === 'support')
+
+  return (
+    <a
+      className={`work-article${item.url ? ' is-clickable' : ''}`}
+      href={item.url || undefined}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ '--work-color': item.color || palette.color, '--work-soft': item.soft || palette.soft }}
+    >
+      <span className="work-dot" aria-hidden="true" />
+
+      <div className="work-media">
+        <MemoMediaImage src={item.coverImage} alt={item.coverAlt || item.title} />
+      </div>
+
+      <div className="work-copy">
+        <div className="work-main-copy">
+          <h2>{item.title}</h2>
+          <p className="work-role">{item.role}{item.company ? ` · ${item.company}` : ''}</p>
+          <p className="work-summary">{item.summary}</p>
+        </div>
+
+        {allSponsors.length > 0 && (
+          <div className="work-sponsors">
+            <button
+              type="button"
+              className="work-sponsor-button"
+              onClick={event => onOpen(event, allSponsors, item.color || palette.color)}
+              aria-label="Lihat Sponsor / Inspired By"
+            >
+              <span className="work-sponsored-label">
+                {showIB && showSB ? 'Support / Inspired By' : showIB ? 'Inspired By' : 'Support By'}
+              </span>
+              <span className="work-sponsored-count">{allSponsors.length}</span>
+            </button>
+          </div>
+        )}
+      </div>
+    </a>
+  )
+})
+
+const SponsorModal = memo(function SponsorModal({ sponsors, color, onClose }) {
+  const hasInspired = sponsors.some(s => s.type === 'inspired')
+  const hasSupport = sponsors.some(s => s.type === 'support')
+  const title = hasInspired && hasSupport ? 'Inspired By / Support By' : hasInspired ? 'Inspired By' : 'Support By'
+  const filtered = sponsors.filter(s => s?.image && s?.url)
+
+  return (
+    <div className="work-sponsor-overlay" onClick={onClose}>
+      <div
+        className="work-sponsor-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        style={{ '--work-color': color }}
+        onClick={event => event.stopPropagation()}
+      >
+        <button type="button" className="work-sponsor-modal-close" onClick={onClose} aria-label="Tutup">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="4" y1="4" x2="16" y2="16" />
+            <line x1="16" y1="4" x2="4" y2="16" />
+          </svg>
+        </button>
+
+        <h2 className="work-sponsor-modal-title">{title}</h2>
+
+        <div className="work-sponsor-modal-list">
+          {filtered.map((sponsor, i) => (
+            <a
+              key={`${sponsor.name}-${i}`}
+              href={sponsor.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-sponsor-modal-card"
+            >
+              <img src={sponsor.image} alt={sponsor.name || ''} loading="lazy" decoding="async" />
+              <span className="work-sponsor-modal-name">{sponsor.name}</span>
+              <span className="work-sponsor-modal-arrow">↗</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+})
+
 export default function WorkPage() {
   const experiences = useMemo(() => portfolioData.experiences, [])
+  const items = useMemo(
+    () => [...experiences].reverse().map((item, index) => ({
+      item,
+      palette: timelinePalette[index % timelinePalette.length],
+      key: item.id,
+    })),
+    [experiences],
+  )
   const [modalSponsors, setModalSponsors] = useState(null)
 
   useEffect(() => {
@@ -114,9 +154,10 @@ export default function WorkPage() {
     return () => window.removeEventListener('keydown', onKey)
   }, [modalSponsors])
 
-  const openModal = useCallback((event, sponsors) => {
+  const openModal = useCallback((event, sponsors, color) => {
+    event.preventDefault()
     event.stopPropagation()
-    setModalSponsors(sponsors)
+    setModalSponsors({ sponsors, color })
   }, [])
 
   const closeModal = useCallback(() => {
@@ -137,73 +178,14 @@ export default function WorkPage() {
         <section className="work-list">
           <div className="work-timeline" aria-hidden="true" />
 
-          {experiences.map((item, index) => {
-            const palette = timelinePalette[index % timelinePalette.length]
-            const allSponsors = (item.sponsors || []).filter(s => s?.image && s?.url)
-            const inspiredSponsors = allSponsors.filter(s => s.type === 'inspired')
-            const supportSponsors = allSponsors.filter(s => s.type === 'support')
-            const showIB = inspiredSponsors.length > 0
-            const showSB = supportSponsors.length > 0
-            const MAX_VISIBLE = 3
-            const visibleIcons = [...inspiredSponsors, ...supportSponsors].slice(0, MAX_VISIBLE)
-            const overflowCount = [...inspiredSponsors, ...supportSponsors].length - MAX_VISIBLE
-
-            return (
-              <article
-                className={`work-article${item.url ? ' is-clickable' : ''}`}
-                key={item.id}
-                style={{ '--work-color': item.color || palette.color, '--work-soft': item.soft || palette.soft }}
-              >
-                <span className="work-dot" aria-hidden="true" />
-
-                <div className="work-media">
-                  <MediaImage src={item.coverImage} alt={item.coverAlt || item.title} />
-                </div>
-
-                <div className="work-copy">
-                  <div className="work-main-copy">
-                    <h2>{item.title}</h2>
-                    <p className="work-role">{item.role}{item.company ? ` · ${item.company}` : ''}</p>
-                    <p className="work-summary">{item.summary}</p>
-                  </div>
-
-                  {allSponsors.length > 0 && (
-                    <div className="work-sponsors">
-                      <span className="work-sponsored-label">
-                        {showIB && showSB ? 'IB / SB' : showIB ? 'IB' : 'SB'}
-                      </span>
-                      <button
-                        type="button"
-                        className="work-sponsor-bowl"
-                        onClick={event => openModal(event, allSponsors)}
-                        aria-label="Lihat sponsor"
-                      >
-                        {visibleIcons.map((sponsor, i) => (
-                          <span
-                            key={`${item.id}-icon-${i}`}
-                            className={`work-sponsor-ball${i % 2 !== 0 ? ' work-sponsor-ball--up' : ''}`}
-                            style={{ '--ball-delay': `${i * 60}ms` }}
-                          >
-                            <img src={sponsor.image} alt={sponsor.name || ''} loading="lazy" decoding="async" />
-                          </span>
-                        ))}
-                        {overflowCount > 0 && (
-                          <span className="work-sponsor-ball work-sponsor-ball--more">
-                            <span className="work-sponsor-overflow">…{overflowCount}</span>
-                          </span>
-                        )}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </article>
-            )
-          })}
+          {items.map(({ item, palette, key }) => (
+            <WorkItem key={`${key}-${palette.color}`} item={item} palette={palette} onOpen={openModal} />
+          ))}
         </section>
       </main>
 
       {modalSponsors && (
-        <SponsorModal sponsors={modalSponsors} onClose={closeModal} />
+        <SponsorModal sponsors={modalSponsors.sponsors} color={modalSponsors.color} onClose={closeModal} />
       )}
 
       <Footer />
